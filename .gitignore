@@ -1,1 +1,4 @@
 packer/variable.json
+*.tfstate
+*.tfstate.backup
+.terraform

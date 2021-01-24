@@ -19,7 +19,7 @@
                 ],
                 "most_recent": true
             },
-            "instance_type": "t2.micro",
+            "instance_type": "t2.nano",
             "ssh_username": "{{ user `user` }}",
             "ami_name": "{{ user `env` }}-ami",
             "force_deregister": true,
