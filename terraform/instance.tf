@@ -15,25 +15,20 @@ resource "aws_subnet" "my_subnet" {
   }
 }
 
-resource "aws_network_interface" "my_net" {
-  subnet_id   = aws_subnet.my_subnet.id
-  private_ips = ["172.16.10.100"]
-
-  tags = {
-    Name = "primary_network_interface"
-  }
-}
-
 resource "aws_instance" "server" {
   ami           = data.aws_ami.my_ami.id
   instance_type = "t2.nano"
+  key_name      = aws_key_pair.user.key_name
+  #  Public
+  vpc_security_group_ids = [
+    aws_security_group.allow_ssh.id,
+    aws_security_group.allow_puma.id
+  ]
+  subnet_id                   = aws_subnet.my_subnet.id
+  associate_public_ip_address = true
+}
 
-  network_interface {
-    network_interface_id = aws_network_interface.my_net.id
-    device_index         = 0
-  }
-
-  #   credit_specification {
-  #     cpu_credits = "unlimited"
-  #   }
+resource "aws_key_pair" "user" {
+  key_name   = "ubuntu-key"
+  public_key = file("~/.ssh/appuser.pub")
 }

@@ -7,8 +7,8 @@
 # }
 
 output "internal_ip_address" {
-  value = aws_network_interface.my_net.private_ip
+  value = aws_instance.server.private_ip
 }
-# output "external_ip_address" {
-#   value = aws_network_interface.my_net.public_ip
-# }
+output "external_ip_address" {
+  value = aws_instance.server.public_ip
+}
