@@ -20,12 +20,24 @@ resource "aws_instance" "server" {
   instance_type = "t2.nano"
   key_name      = aws_key_pair.user.key_name
   #  Public
-  vpc_security_group_ids = [
-    aws_security_group.allow_ssh.id,
-    aws_security_group.allow_puma.id
-  ]
+  vpc_security_group_ids      = [aws_security_group.allow_ports.id]
   subnet_id                   = aws_subnet.my_subnet.id
   associate_public_ip_address = true
+
+  connection {
+    type  = "ssh"
+    host  = self.public_ip
+    user  = "ubuntu"
+    agent = false
+    # путь до приватного ключа
+    private_key = file("~/.ssh/appuser")
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo systemctl restart mongod"
+    ]
+  }
 }
 
 resource "aws_key_pair" "user" {
