@@ -1,0 +1,52 @@
+/* data "aws_availability_zones" "zone" {
+  
+}
+output "aws_zone" {
+  value = data.aws_availability_zones.zone.names
+}
+
+data "aws_caller_identity" "name" {}
+output "aws_caller" {
+  value = data.aws_caller_identity.name.account_id
+}
+
+data "aws_region" "current" {}
+
+output "aws_region" {
+ value =  data.aws_region.current
+} */
+
+/* locals {
+  names = [
+    aws_instance.app.tags.Name,
+    aws_instance.db.tags.Name
+  ]
+  ips   = [
+    aws_instance.app.public_ip,
+    aws_instance.db.private_ip
+  ]
+}
+
+resource "local_file" "generate_inventory" {
+  content = templatefile("hosts.tpl", {
+    names = local.names,
+    addrs = local.ips,
+    bastion = aws_instance.app.public_ip
+    privat_key = var.privat_key
+  })
+  filename = "inventory"
+
+  provisioner "local-exec" {
+    command = "chmod a-x inventory"
+  }
+
+  provisioner "local-exec" {
+    command = "cp -u inventory ../ansible/inventory"
+  }
+
+  provisioner "local-exec" {
+    when = destroy
+    command = "mv inventory inventory.backup"
+    on_failure = continue
+  }
+} */
