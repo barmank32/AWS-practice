@@ -2,3 +2,5 @@ packer/variable.json
 *.tfstate
 *.tfstate.backup
 .terraform
+ansible/roles/jdauphant.nginx
+ansible/vault.key
