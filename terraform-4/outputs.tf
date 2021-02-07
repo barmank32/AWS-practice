@@ -11,17 +11,21 @@ output "internal_ip_address_db" {
 #   value = aws_eip.eip_db.public_ip
 # }
 output "external_ip_address_bastion" {
-  value = aws_instance.bastion.public_ip
+  value = aws_eip.eip_bastion.public_ip
 }
 
 
 output "NAT_IP_GW" {
-  value = aws_nat_gateway.aws_nat_gateway.public_ip
+  value = module.vpc.nat_public_ips
 }
 
-output "subnet_id" {
-  value = aws_subnet.mysub[*].id
-}
-output "subnet_cidr" {
-  value = aws_subnet.mysub[*].cidr_block
+# output "subnet_id" {
+#   value = aws_subnet.mysub[*].id
+# }
+# output "subnet_cidr" {
+#   value = aws_subnet.mysub[*].cidr_block
+# }
+
+output "zones" {
+  value = data.aws_availability_zones.avalible
 }

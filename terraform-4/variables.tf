@@ -25,3 +25,6 @@ variable privat_key {
 variable sg_ports {
   description = "Allow Ports"
 }
+variable "vpc_cidr" {
+  default = "10.0.0.0/24"
+}
