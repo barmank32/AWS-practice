@@ -47,12 +47,9 @@ resource "aws_route_table" "my_vpc_public" {
   }
 }
 
-resource "aws_route_table_association" "rt_app" {
-  subnet_id      = aws_subnet.mysub[0].id
-  route_table_id = aws_route_table.my_vpc_public.id
-}
-resource "aws_route_table_association" "rt_db" {
-  subnet_id      = aws_subnet.mysub[1].id
+resource "aws_route_table_association" "sub_route" {
+  count          = 2
+  subnet_id      = aws_subnet.mysub[count.index].id
   route_table_id = aws_route_table.my_vpc_public.id
 }
 
@@ -62,5 +59,3 @@ resource "aws_internet_gateway" "gw" {
     "name" = "internet_gw"
   }
 }
-
-

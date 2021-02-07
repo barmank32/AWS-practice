@@ -4,6 +4,7 @@
 terraform {
   required_version = "> 0.12.0"
 }
+
 provider "aws" {
   region                  = var.zone
   shared_credentials_file = "~/.aws/credentials"
